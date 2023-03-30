@@ -1,14 +1,25 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { actionCreators, Todo } from "../store";
 
-export default function Home() {
-  const [text, setText] = useState<string>("");
+interface Props {
+  toDos: Todo[];
+  addToDo: (text: string) => void;
+}
 
-  function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+function Home({ toDos, addToDo }: Props) {
+  console.log(toDos);
+
+  const [text, setText] = useState("");
+
+  function onChange(e: ChangeEvent<HTMLInputElement>) {
     setText(e.target.value);
   }
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    addToDo(text);
     setText("");
   }
 
@@ -24,7 +35,19 @@ export default function Home() {
         />
         <button>Add</button>
       </form>
-      <ul></ul>
+      <ul>{JSON.stringify(toDos)}</ul>
     </div>
   );
 }
+
+function mapStateToProps(state: Todo[]) {
+  return { toDos: state };
+}
+
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    addToDo: (text: string) => dispatch(actionCreators.addToDo(text)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
