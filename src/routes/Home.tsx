@@ -1,7 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { actionCreators, Todo } from "../store";
+import ToDo from "../components/ToDo";
+import { Todo, actionCreators } from "../store";
 
 interface Props {
   toDos: Todo[];
@@ -9,8 +10,6 @@ interface Props {
 }
 
 function Home({ toDos, addToDo }: Props) {
-  console.log(toDos);
-
   const [text, setText] = useState("");
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
@@ -35,7 +34,11 @@ function Home({ toDos, addToDo }: Props) {
         />
         <button>Add</button>
       </form>
-      <ul>{JSON.stringify(toDos)}</ul>
+      <ul>
+        {toDos.map((toDo) => (
+          <ToDo {...toDo} key={toDo.id} />
+        ))}
+      </ul>
     </div>
   );
 }
