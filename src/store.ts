@@ -23,7 +23,6 @@ const delToDo = (id: number) => {
 };
 
 const reducer = (state: Todo[] = [], action: any) => {
-  console.log("123123");
   switch (action.type) {
     case ADD:
       return [...state, { text: action.text, id: Date.now() }];
