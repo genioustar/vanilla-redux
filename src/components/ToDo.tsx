@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Dispatch } from "redux";
-import { actionCreators } from "../store";
+import { remove } from "../store";
 
 // param이 분명 ToDo로 넘어오는데 어떻게 text가 프린트 되나... 고민해보니 이거 {text}로 객체 구조 분해로 되어있어서 되는거였군...ㅎㅎ
 function ToDo({
@@ -22,9 +22,8 @@ function ToDo({
 }
 
 function mapDispatchToProps(dispatch: Dispatch, ownProps: any) {
-  console.log(ownProps);
   return {
-    onBtnClick: () => dispatch(actionCreators.delToDo(ownProps.id)),
+    onBtnClick: () => dispatch(remove(ownProps.id)),
   };
 }
 
